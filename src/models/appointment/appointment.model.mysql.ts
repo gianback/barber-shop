@@ -41,14 +41,15 @@ export class AppointmentModelMysql {
   ): Promise<AppointmentInterface[] | null> {
     try {
       const findAppointments = await pool.query<AppointmentInterface[]>(
-        "SELECT * FROM appointments WHERE userId = ?",
+        "SELECT * FROM appointment WHERE user_id = ?",
         [id]
       );
+
+      if (findAppointments.length === 0) return null;
+
       return findAppointments;
-    } catch (error) {
-      throw new Error(
-        "Something went wrong getting the appointments by id with MYSQL"
-      );
+    } catch (error: any) {
+      throw new Error(`Error: ${error.sqlMessage}`);
     }
   }
 
@@ -67,7 +68,9 @@ export class AppointmentModelMysql {
         message: "Appointment edited",
       };
     } catch (error: any) {
-      throw new Error("Something went wron editing the appointment with MYSQL");
+      throw new Error(
+        "Something went wrong editing the appointment with MYSQL"
+      );
     }
   }
 }

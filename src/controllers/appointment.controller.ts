@@ -25,13 +25,12 @@ export class AppointmentController {
 
   getAppointmentsByUserid = async (req: Request, res: Response) => {
     const { id } = req.params;
-
     const appointments = await this.appointmentModel.getAppointmentsByUserid(
       id
     );
 
     if (!appointments) {
-      return res.status(400).json({ message: "No appointments found" });
+      return res.status(404).json({ message: "No appointments found" });
     }
 
     return res.status(200).json({ appointments });
