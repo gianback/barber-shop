@@ -17,7 +17,7 @@ export interface AppointmentRepository {
   createAppointment(
     appointment: AppointmentInterface
   ): Promise<GeneralResponse>;
-  getAppointmentsByUserid(id: string): Promise<AppointmentInterface | null>;
+  getAppointmentsByUserid(id: string): Promise<AppointmentInterface[] | null>;
   editAppointment({
     date,
     userId,
