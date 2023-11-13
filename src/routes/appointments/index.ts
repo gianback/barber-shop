@@ -9,7 +9,7 @@ export const AppointmentRoute = (appointmentModel: AppointmentRepository) => {
 
   appoinmentRoute.post("/", appointmentController.createAppointment);
   appoinmentRoute.patch("/", appointmentController.editAppointment);
-  appoinmentRoute.get("/", appointmentController.getAppointmentsByUserid);
+  appoinmentRoute.get("/:id", appointmentController.getAppointmentsByUserid);
 
   return appoinmentRoute;
 };
