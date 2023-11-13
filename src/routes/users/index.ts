@@ -1,24 +1,13 @@
-import { Request, Response, Router } from "express";
-import { pool } from "../../config/mysql";
+import { Router } from "express";
+import { UserController } from "../../controllers/user.controller";
+import { UserRepository } from "../../interfaces/user";
 
-const router = Router();
+export const UserRoute = (userModel: UserRepository) => {
+  const userRoute = Router();
 
-router.get("/", async (req: Request, res: Response) => {
-  const users = await pool.query("SELECT * FROM user");
-  res.json({ users });
-});
-router.post("/", async (req, res) => {
-  const admin = {
-    name: "admin",
-    surname: "Gian admin",
-    lastname: "Gian admin 2",
-    email: "admin@gmail.com",
-    password: "admin@@admin",
-    roll: "admin",
-  };
+  const userController = new UserController(userModel);
 
-  const newUser = await pool.query("INSERT INTO user SET ?", admin);
+  userRoute.post("/", userController.createUser);
 
-  res.json({ newUser });
-});
-export default router;
+  return userRoute;
+};
