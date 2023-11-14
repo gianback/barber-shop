@@ -8,4 +8,7 @@ export const {
   SQL_PASSWORD,
   SQL_DATABASE,
   SQL_PORT = process.env.SQL_PORT || 3306,
+  CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET,
 } = process.env;
