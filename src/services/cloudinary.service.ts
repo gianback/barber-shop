@@ -13,15 +13,19 @@ cloudinary.config({
 });
 
 export const cloudinaryService = async (image: Buffer): Promise<string> => {
-  return new Promise((res, rej) => {
-    const theTransformStream = cloudinary.uploader.upload_stream(
-      { resource_type: "image" },
-      (err: any, result: any) => {
-        if (err) return rej(err);
-        res(result);
-      }
-    );
-    const str = Readable.from(image);
-    str.pipe(theTransformStream);
-  });
+  try {
+    return new Promise((res, rej) => {
+      const theTransformStream = cloudinary.uploader.upload_stream(
+        { resource_type: "image" },
+        (err: any, result: any) => {
+          if (err) return rej(err);
+          res(result);
+        }
+      );
+      const str = Readable.from(image);
+      str.pipe(theTransformStream);
+    });
+  } catch (error) {
+    throw new Error("ERROR CLOUDINARY SERVICE");
+  }
 };
