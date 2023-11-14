@@ -54,6 +54,10 @@ export class ServiceController {
 
       newPropertiesService.img = imgUrl;
     }
+    if (newPropertiesService.name) {
+      //TODO: implement creation slug
+      newPropertiesService.name = newPropertiesService.name.toLowerCase();
+    }
 
     const { message, status } = await this.serviceModel.updateService({
       id,
