@@ -3,7 +3,7 @@ import {
   EditAppointmentProps,
 } from "../../interfaces/appointment";
 import { pool } from "../../config/mysql";
-import { GeneralResponse } from "../../interfaces/user";
+import { GeneralResponse } from "../../interfaces/response";
 
 export class AppointmentModelMysql {
   static async createAppointment({
@@ -13,7 +13,7 @@ export class AppointmentModelMysql {
     userId,
   }: AppointmentInterface): Promise<GeneralResponse> {
     try {
-      await pool.query<AppointmentInterface>("INSERT INTO appointments SET ?", {
+      await pool.query("INSERT INTO appointments SET ?", {
         date,
         paymentId,
         serviceId,
@@ -58,10 +58,10 @@ export class AppointmentModelMysql {
     date,
   }: EditAppointmentProps): Promise<GeneralResponse> {
     try {
-      await pool.query<AppointmentInterface>(
-        "UPDATE appointment SET date = ? WHERE user_id = ?",
-        [date, userId]
-      );
+      await pool.query("UPDATE appointment SET date = ? WHERE user_id = ?", [
+        date,
+        userId,
+      ]);
 
       return {
         status: 200,

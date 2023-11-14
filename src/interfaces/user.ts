@@ -1,3 +1,5 @@
+import { GeneralResponse } from "./response";
+
 export interface UserInterface {
   id?: number;
   name: string;
@@ -7,13 +9,9 @@ export interface UserInterface {
   password: string;
   roll?: UserRoll;
 }
-enum UserRoll {
+export enum UserRoll {
   ADMIN = "admin",
   USER = "user",
-}
-export interface GeneralResponse {
-  status: number;
-  message: string;
 }
 
 export interface UserRepository {

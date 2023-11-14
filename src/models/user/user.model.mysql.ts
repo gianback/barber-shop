@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { pool } from "../../config/mysql";
-import { GeneralResponse, UserInterface } from "../../interfaces/user";
+import { UserInterface } from "../../interfaces/user";
+import { GeneralResponse } from "../../interfaces/response";
 
 export class UserModelMysql {
   static async createUser({

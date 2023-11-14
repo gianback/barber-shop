@@ -1,4 +1,4 @@
-import { GeneralResponse } from "./user";
+import { GeneralResponse } from "./response";
 
 export interface AppointmentInterface {
   id?: string;
