@@ -1,16 +1,23 @@
 import { compare } from "bcrypt";
-import { pool } from "../../config/mysql";
-import { UserInterface } from "../../interfaces/user";
-import { GeneralResponse } from "../../interfaces/response";
+import { pool } from "../config/mysql";
+import { UserInterface } from "../interfaces/user";
+import { GeneralResponse } from "../interfaces/response";
 
-export class AuthModel {
+type loginProps = {
+  email: string;
+  password: string;
+};
+
+export interface AuthRepository {
+  login({ email, password }: loginProps): Promise<GeneralResponse>;
+  register(user: UserInterface): Promise<GeneralResponse>;
+}
+
+export class AuthService {
   static async login({
     email,
     password: pwdPrompt,
-  }: {
-    email: string;
-    password: string;
-  }): Promise<GeneralResponse> {
+  }: loginProps): Promise<GeneralResponse> {
     try {
       const { password } = await pool.query<UserInterface>(
         "SELECT * FROM user WHERE email = ?",
