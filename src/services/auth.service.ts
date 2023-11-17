@@ -1,4 +1,4 @@
-import { compare } from "bcrypt";
+import { compare, hash } from "bcrypt";
 import { pool } from "../config/mysql";
 import { UserInterface } from "../interfaces/user";
 import { GeneralResponse } from "../interfaces/response";
@@ -52,9 +52,11 @@ export class AuthService {
     roll,
   }: UserInterface): Promise<GeneralResponse> {
     try {
+      const hashedPwd = await hash(password, 10);
+
       await pool.query(
         "INSERT INTO user (name, surname, lastname, email, password, roll) VALUES (?,?,?,?,?,?)",
-        [name, surname, lastname, email, password, roll]
+        [name, surname, lastname, email, hashedPwd, roll]
       );
 
       return {
@@ -68,7 +70,7 @@ export class AuthService {
           message: "User already exists",
         };
       }
-
+      console.log(error);
       throw new Error("Error registering user");
     }
   }

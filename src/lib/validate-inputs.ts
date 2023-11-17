@@ -147,14 +147,25 @@ export const Appointment = z.object({
     }),
 
   serviceId: z
-    .number({
-      required_error: "ServiceId is required",
-      invalid_type_error: "ServiceId must be a number",
+    // .number({
+    //   required_error: "ServiceId is required",
+    //   invalid_type_error: "ServiceId must be a number",
+    // })
+    // .int({
+    //   message: "ServiceId must be an integer",
+    // }),
+    .string({
+      required_error: "serviceId is required",
+      invalid_type_error: "serviceId must be a string",
     })
-    .int({
-      message: "ServiceId must be an integer",
+    .trim()
+    .min(1)
+    .max(36, {
+      message: "serviceId must be between 1 and 36 characters",
+    })
+    .uuid({
+      message: "serviceId must be a valid uuid",
     }),
-
   userId: z
     .string({
       required_error: "userId is required",

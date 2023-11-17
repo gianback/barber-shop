@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { AuthRepository } from "../services/auth.service";
+import { UserRoll } from "../interfaces/user";
 
 export class AuthController {
   private authRepository: AuthRepository;
@@ -26,6 +27,7 @@ export class AuthController {
       name,
       password,
       surname,
+      roll: UserRoll.USER,
     });
 
     return res.status(status).json({ message });
