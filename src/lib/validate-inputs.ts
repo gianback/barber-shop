@@ -66,27 +66,34 @@ export const Post = z.object({
     .max(255, {
       message: "name must be between 1 and 255 characters",
     }),
-  userId: z
-    .string({
-      required_error: "Name is required",
-      invalid_type_error: "Name must be a string",
-    })
-    .trim()
-    .min(1)
-    .max(36, {
-      message: "name must be between 1 and 36 characters",
-    })
-    .uuid({
-      message: "userId must be a valid uuid",
-    }),
   description: z
     .string({
       required_error: "Description is required",
       invalid_type_error: "Description must be a string",
     })
     .trim()
+    .min(1)
+    .max(255, {
+      message: "Description must be between 1 and 255 characters",
+    }),
+  content: z
+    .string({
+      required_error: "Content is required",
+      invalid_type_error: "Content must be a string",
+    })
+    .trim()
     .min(1, {
-      message: "Description must be min 1 character",
+      message: "Content must be min 1 character",
+    }),
+  slug: z
+    .string({
+      required_error: "Slug is required",
+      invalid_type_error: "Slug must be a string",
+    })
+    .trim()
+    .min(1)
+    .max(255, {
+      message: "Slug must be between 1 and 255 characters",
     }),
   img: z
     .any()
@@ -147,37 +154,21 @@ export const Appointment = z.object({
     }),
 
   serviceId: z
-    // .number({
-    //   required_error: "ServiceId is required",
-    //   invalid_type_error: "ServiceId must be a number",
-    // })
-    // .int({
-    //   message: "ServiceId must be an integer",
-    // }),
-    .string({
-      required_error: "serviceId is required",
-      invalid_type_error: "serviceId must be a string",
+    .number({
+      required_error: "ServiceId is required",
+      invalid_type_error: "ServiceId must be a number",
     })
-    .trim()
-    .min(1)
-    .max(36, {
-      message: "serviceId must be between 1 and 36 characters",
-    })
-    .uuid({
-      message: "serviceId must be a valid uuid",
+    .int({
+      message: "ServiceId must be an integer",
     }),
+
   userId: z
-    .string({
+    .number({
       required_error: "userId is required",
-      invalid_type_error: "userId must be a string",
+      invalid_type_error: "userId must be a number",
     })
-    .trim()
-    .min(1)
-    .max(36, {
-      message: "userId must be between 1 and 36 characters",
-    })
-    .uuid({
-      message: "userId must be a valid uuid",
+    .int({
+      message: "userId must be an integer",
     }),
   paymentId: z
     .string({
