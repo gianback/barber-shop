@@ -39,7 +39,7 @@ export class AuthService {
     } catch (error) {
       return {
         status: 400,
-        message: "Invalid credenctials catch",
+        message: "Invalid credenctials",
       };
     }
   }

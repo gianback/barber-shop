@@ -10,10 +10,26 @@ export const PostRoute = (postModel: PostRepository) => {
 
   const postController = new PostController(postModel);
 
-  postRoute.post("/", validateRoll, validatePost, postController.createPost);
-  postRoute.delete("/:id", validateRoll, postController.deletePost);
+  postRoute.post(
+    "/",
+    validateToken,
+    validateRoll,
+    validatePost,
+    postController.createPost
+  );
+  postRoute.delete(
+    "/:id",
+    validateToken,
+    validateRoll,
+    postController.deletePost
+  );
   postRoute.get("/", validateToken, postController.getPosts);
-  postRoute.patch("/:id", validateRoll, postController.updatePost);
+  postRoute.patch(
+    "/:id",
+    validateToken,
+    validateRoll,
+    postController.updatePost
+  );
 
   return postRoute;
 };

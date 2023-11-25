@@ -17,7 +17,7 @@ export const validateService = (
   };
 
   try {
-    const result = Service.parse(post);
+    Service.parse(post);
 
     next();
   } catch (error) {

@@ -4,21 +4,22 @@ import { get } from "js-cookie";
 import { JWT_SECRET } from "../config/dotenv";
 
 export const validateToken = (
-  _req: Request,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const token = get("token") as string;
+  const { token } = req.cookies;
 
   if (!token) {
-    return res.status(401).json({ message: "No token provided" });
+    return res.status(400).json({
+      message: "Token is required",
+    });
   }
 
-  const isTokenValid = verify(token, JWT_SECRET);
-
-  if (!isTokenValid) {
+  try {
+    verify(token, JWT_SECRET);
+    next();
+  } catch (error) {
     return res.status(401).json({ message: "Invalid token" });
   }
-
-  next();
 };

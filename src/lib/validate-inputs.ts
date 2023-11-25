@@ -181,4 +181,4 @@ export const Appointment = z.object({
       message: "paymentId must be between 1 and 70 characters",
     }),
 });
-export const Roll = z.enum(["Admin"]);
+export const Roll = z.enum(["admin"]);

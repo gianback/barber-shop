@@ -12,13 +12,24 @@ export const ServiceRoute = (serviceModel: ServiceRepository) => {
 
   serviceRoute.post(
     "/",
+    validateToken,
     validateRoll,
     validateService,
     serviceController.createService
   );
-  serviceRoute.delete("/:id", validateRoll, serviceController.deleteService);
   serviceRoute.get("/", validateToken, serviceController.getServices);
-  serviceRoute.patch("/:id", validateRoll, serviceController.updateService);
+  serviceRoute.delete(
+    "/:id",
+    validateToken,
+    validateRoll,
+    serviceController.deleteService
+  );
+  serviceRoute.patch(
+    "/:id",
+    validateToken,
+    validateRoll,
+    serviceController.updateService
+  );
 
   return serviceRoute;
 };
