@@ -17,7 +17,7 @@ export const ServiceRoute = (serviceModel: ServiceRepository) => {
     validateService,
     serviceController.createService
   );
-  serviceRoute.get("/", validateToken, serviceController.getServices);
+  serviceRoute.get("/", serviceController.getServices);
   serviceRoute.delete(
     "/:id",
     validateToken,
