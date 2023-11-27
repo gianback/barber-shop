@@ -1,0 +1,45 @@
+.Icon-Menu {
+  position: relative;
+  isolation: isolate;
+  transition-property: background-color, height, width;
+  transition-duration: 0.4s;
+  transition-timing-function: ease;
+  border-radius: 25px 0 0 25px;
+  z-index: 6;
+  @apply flex w-16 h-16 justify-center items-center relative cursor-pointer bg-transparent;
+  @media (min-width: 1024px) {
+    display: none;
+  }
+
+  /* Animacion cuando "isActive" es true */
+}
+.span {
+  height: 0.3rem;
+  width: 2.4rem;
+  transition: transform 0.5s ease, background-color 0.5s ease;
+  @apply bg-primary w-11 h-[4px] inline-block absolute mx-auto rounded-2xl;
+}
+.Icon-Menu span:nth-child(1) {
+  transform: translateY(-0.8rem);
+}
+.Icon-Menu span:nth-child(3) {
+  transform: translateY(0.8rem);
+}
+.Icon-Menu.change {
+  border: 2px solid white;
+  @apply bg-primary rounded-full;
+}
+.Icon-Menu.change span {
+  @apply bg-white;
+}
+.Icon-Menu.change span:nth-child(1) {
+  @apply w-14;
+  transform: rotateZ(42.19deg) scale(0.45);
+}
+.Icon-Menu.change span:nth-child(2) {
+  @apply opacity-0;
+}
+.Icon-Menu.change span:nth-child(3) {
+  transform: rotateZ(-42.19deg) scale(0.45);
+  @apply w-14;
+}
