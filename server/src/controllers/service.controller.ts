@@ -15,12 +15,13 @@ export class ServiceController {
     const file = req.files && (req.files.file as UploadedFile);
     const buffer = file && Buffer.from(file.data);
     const img = await cloudinaryService(buffer as Buffer);
-
+    const slug = createSlug(name);
     const { message, status } = await this.serviceModel.createService({
       description,
       name,
       price,
       img,
+      slug,
     });
 
     res.status(status).json({ message });
@@ -55,8 +56,8 @@ export class ServiceController {
       newPropertiesService.img = imgUrl;
     }
     if (newPropertiesService.name) {
-      //TODO: implement creation slug
-      newPropertiesService.name = newPropertiesService.name.toLowerCase();
+      const slug = createSlug(newPropertiesService.name);
+      newPropertiesService.name = slug;
     }
 
     const { message, status } = await this.serviceModel.updateService({
