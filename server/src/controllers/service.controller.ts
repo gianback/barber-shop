@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { ServiceRepository, ServiceUpdateOmitId } from "../interfaces/service";
 import { cloudinaryService } from "../services/cloudinary.service";
 import { UploadedFile } from "express-fileupload";
+import { createSlug } from "../lib/create-slug";
 
 export class ServiceController {
   private serviceModel: ServiceRepository;
