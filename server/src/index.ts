@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(fileupload());
 app.use(cookieParser());
-app.use("v1/api/", AppRoute);
+app.use("/v1/api/", AppRoute);
 
 app.listen(3000, () => {
   console.log("listening on port 3000");
