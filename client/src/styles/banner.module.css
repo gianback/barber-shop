@@ -1,0 +1,13 @@
+.Banner:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    #0d0d1e 0%,
+    rgba(13, 18, 30, 0) 10.37%,
+    rgba(13, 18, 30, 0) 41.89%,
+    #0d121e 89.13%,
+    #0d121e 111.22%
+  );
+}

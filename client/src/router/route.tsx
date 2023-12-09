@@ -1,14 +1,17 @@
-import { Header } from "@/components/Header";
+import { Layout } from "@/components/Layout";
 import { Home } from "@/pages/Home";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Login } from "@/pages/Login";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 export function Router() {
   return (
     <BrowserRouter>
-      <Header />
-      <Switch>
-        <Route exact path="/" component={Home} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Home />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </BrowserRouter>
   );
 }
