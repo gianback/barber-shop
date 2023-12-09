@@ -30,18 +30,18 @@ export class AuthService {
           message: "Invalid credenctials",
         };
       }
-
       const { password } = user[0];
 
       const isValidPassword = await compare(pwdPrompt, password);
-      const token = generateToken(email);
-      console.log({ token });
+
       if (!isValidPassword) {
         return {
           status: 400,
           message: "Invalid credenctials",
         };
       }
+      const token = generateToken(email);
+
       return {
         status: 200,
         message: "Login successfull",
