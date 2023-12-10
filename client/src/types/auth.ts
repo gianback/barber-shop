@@ -23,3 +23,15 @@ export const LoginSchema = z.object({
       message: "Contraseña debe ser máximo 50 caracteres.",
     }),
 });
+
+export const RegisterSchema = LoginSchema.extend({
+  name: z.string().min(1, {
+    message: "Nombre es requerido.",
+  }),
+  surname: z.string().min(1, {
+    message: "Apellido  es requerido.",
+  }),
+  lastname: z.string().min(1, {
+    message: "Apellido  es requerido.",
+  }),
+});

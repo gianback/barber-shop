@@ -17,9 +17,11 @@ import { api } from "@/lib/api";
 import Cookie from "js-cookie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "@/store/user.store";
 
 export function LoginForm() {
   const navigate = useNavigate();
+  const setUser = useUserStore((state) => state.setUser);
   const [responseMessage, setResponseMessage] = useState("");
 
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -34,7 +36,9 @@ export function LoginForm() {
   const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
     try {
       const { data } = await api.post("auth/login", values);
-      const { token } = data;
+      const { token, name, surname } = data;
+      console.log({ data });
+      setUser({ name, surname });
       Cookie.set("token", token);
       navigate("/");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

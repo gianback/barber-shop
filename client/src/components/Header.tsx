@@ -1,15 +1,31 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Logo } from "./Logo";
 import { Button } from "./ui/button";
 import { Container } from "./Container";
 import { IconMenu } from "./Icon-menu";
 import { useState } from "react";
+import { AdminList } from "./AdminList";
+import Cookie from "js-cookie";
+import { useUserStore } from "@/store/user.store";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const user = useUserStore((state) => state.user);
+
+  const navigate = useNavigate();
 
   const handleIsOpen = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleGoToContact = () => {
+    const token = Cookie.get("token");
+
+    if (!token) {
+      navigate("/login");
+    } else {
+      navigate("/contact");
+    }
   };
 
   return (
@@ -34,11 +50,20 @@ export function Header() {
             <li className="lg:hidden">
               <Link to="/contact">Agendar cita</Link>
             </li>
+            <AdminList />
           </ul>
         </div>
-        <Button className="bg-primary  hover:bg-primary/80 hidden lg:inline-block">
-          <Link to="/contact">Agendar cita</Link>
-        </Button>
+        <div className="flex items-center gap-3">
+          {user.name && <span className="text-white">Hola {user.name}</span>}
+          <Button
+            onClick={handleGoToContact}
+            className="bg-primary  hover:bg-primary/80 hidden lg:inline-block"
+          >
+            Agendar cita
+            {/* <Link to="/contact"></Link> */}
+          </Button>
+        </div>
+
         <IconMenu isActive={isOpen} setIsActive={handleIsOpen} />
       </Container>
     </header>
