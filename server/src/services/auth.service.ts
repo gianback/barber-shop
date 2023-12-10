@@ -5,16 +5,7 @@ import { AuthResponse, GeneralResponse } from "../interfaces/response";
 import { UserRepository } from "../models/user/user.model.mysql";
 import { JWT_SECRET } from "../config/dotenv";
 import { sign } from "jsonwebtoken";
-
-type loginProps = {
-  email: string;
-  password: string;
-};
-
-export interface AuthRepository {
-  login({ email, password }: loginProps): Promise<AuthResponse>;
-  register(user: UserInterface): Promise<GeneralResponse>;
-}
+import { loginProps } from "../interfaces/auth";
 
 export class AuthService {
   private userRepository: UserRepository;
@@ -38,7 +29,7 @@ export class AuthService {
       }
 
       const user = await this.userRepository.findUserByEmail(email);
-      const { password, id } = user;
+      const { password, id, roll } = user;
 
       const isValidPassword = await this.comparePwd(pwdPrompt, password);
 
@@ -48,7 +39,10 @@ export class AuthService {
           message: "Invalid credenctials",
         };
       }
-      const token = this.generateToken(id as string);
+      const token = this.generateToken({
+        id: id as string,
+        roll: roll as string,
+      });
 
       return {
         status: 200,
@@ -93,12 +87,16 @@ export class AuthService {
       throw new Error("Error registering user");
     }
   };
-  generateToken = (id: string): string => {
-    const token = sign({ id }, JWT_SECRET, { expiresIn: "2h" });
+  generateToken = ({ id, roll }: { id: string; roll: string }): string => {
+    const token = sign({ id, roll }, JWT_SECRET, { expiresIn: "2h" });
 
     return token;
   };
   comparePwd = async (pwd: string, password: string): Promise<boolean> => {
     return await compare(pwd, password);
   };
+  verifyRoll = (): GeneralResponse => ({
+    status: 200,
+    message: "Valid roll",
+  });
 }

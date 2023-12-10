@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import { AuthRepository } from "../services/auth.service";
 import { UserRoll } from "../interfaces/user";
-
+import { AuthRepository } from "../interfaces/auth";
 export class AuthController {
   private authRepository: AuthRepository;
   constructor(authRepository: AuthRepository) {
@@ -31,5 +30,11 @@ export class AuthController {
     });
 
     return res.status(status).json({ message });
+  };
+
+  verifyRoll = (req: Request, res: Response) => {
+    const response = this.authRepository.verifyRoll();
+
+    return res.status(response.status).json(response);
   };
 }

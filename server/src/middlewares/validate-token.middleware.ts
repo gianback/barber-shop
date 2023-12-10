@@ -1,6 +1,5 @@
 import { verify } from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
-import { get } from "js-cookie";
 import { JWT_SECRET } from "../config/dotenv";
 
 export const validateToken = (

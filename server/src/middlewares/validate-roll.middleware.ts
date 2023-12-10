@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { JwtPayload, verify } from "jsonwebtoken";
-import { JWT_SECRET } from "../config/dotenv";
+import { JwtPayload, decode } from "jsonwebtoken";
 import { Roll } from "../lib/validate-inputs";
 
 export const validateRoll = (
@@ -9,12 +8,10 @@ export const validateRoll = (
   next: NextFunction
 ) => {
   const { token } = req.cookies;
-
   try {
-    const decoded = verify(token, JWT_SECRET) as JwtPayload;
-
-    if (Roll.parse(decoded.roll)) {
-      throw new Error("You has no permissions to do this action");
+    const decoded = decode(token) as JwtPayload;
+    if (!Roll.parse(decoded.roll)) {
+      res.json("You has no permissions to do this action");
     }
 
     next();
