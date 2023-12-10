@@ -7,12 +7,16 @@ import { PostRoute } from "./posts";
 import { PostModelMysql } from "../models/post/post.model.mysql";
 import { AuthRoute } from "./auth";
 import { AuthService } from "../services/auth.service";
+import { UserModelMysql } from "../models/user/user.model.mysql";
 
 const router = Router();
 
 router.use("/appointments", AppointmentRoute(AppointmentModelMysql));
 router.use("/services", ServiceRoute(ServiceModelMysql));
 router.use("/posts", PostRoute(PostModelMysql));
-router.use("/auth", AuthRoute(AuthService));
+
+const authService = new AuthService(UserModelMysql);
+
+router.use("/auth", AuthRoute(authService));
 
 export default router;

@@ -2,7 +2,9 @@ import { compare, hash } from "bcrypt";
 import { pool } from "../config/mysql";
 import { UserInterface } from "../interfaces/user";
 import { AuthResponse, GeneralResponse } from "../interfaces/response";
-import { generateToken } from "../lib/generate-token";
+import { UserRepository } from "../models/user/user.model.mysql";
+import { JWT_SECRET } from "../config/dotenv";
+import { sign } from "jsonwebtoken";
 
 type loginProps = {
   email: string;
@@ -15,24 +17,30 @@ export interface AuthRepository {
 }
 
 export class AuthService {
-  static async login({
+  private userRepository: UserRepository;
+
+  constructor(userRepository: UserRepository) {
+    this.userRepository = userRepository;
+  }
+
+  login = async ({
     email,
     password: pwdPrompt,
-  }: loginProps): Promise<AuthResponse> {
+  }: loginProps): Promise<AuthResponse> => {
     try {
-      const user = await pool.query<UserInterface[]>(
-        "SELECT * FROM user WHERE email = ?",
-        [email]
-      );
-      if (!user[0]) {
+      const existUser = await this.userRepository.findUserByEmail(email);
+
+      if (!existUser) {
         return {
           status: 400,
           message: "Invalid credenctials",
         };
       }
-      const { password } = user[0];
 
-      const isValidPassword = await compare(pwdPrompt, password);
+      const user = await this.userRepository.findUserByEmail(email);
+      const { password, id } = user;
+
+      const isValidPassword = await this.comparePwd(pwdPrompt, password);
 
       if (!isValidPassword) {
         return {
@@ -40,7 +48,7 @@ export class AuthService {
           message: "Invalid credenctials",
         };
       }
-      const token = generateToken(email);
+      const token = this.generateToken(id as string);
 
       return {
         status: 200,
@@ -53,15 +61,15 @@ export class AuthService {
         message: "Invalid credenctials",
       };
     }
-  }
-  static async register({
+  };
+  register = async ({
     name,
     email,
     surname,
     lastname,
     password,
     roll,
-  }: UserInterface): Promise<GeneralResponse> {
+  }: UserInterface): Promise<GeneralResponse> => {
     try {
       const hashedPwd = await hash(password, 10);
 
@@ -84,5 +92,13 @@ export class AuthService {
       console.log(error);
       throw new Error("Error registering user");
     }
-  }
+  };
+  generateToken = (id: string): string => {
+    const token = sign({ id }, JWT_SECRET, { expiresIn: "2h" });
+
+    return token;
+  };
+  comparePwd = async (pwd: string, password: string): Promise<boolean> => {
+    return await compare(pwd, password);
+  };
 }
