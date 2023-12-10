@@ -16,6 +16,6 @@ export const validateRoll = (
 
     next();
   } catch (error) {
-    throw new Error("Error Validating Roll Middleware");
+    res.json(error);
   }
 };

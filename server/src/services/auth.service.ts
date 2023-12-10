@@ -5,7 +5,7 @@ import { AuthResponse, GeneralResponse } from "../interfaces/response";
 import { UserRepository } from "../models/user/user.model.mysql";
 import { JWT_SECRET } from "../config/dotenv";
 import { sign } from "jsonwebtoken";
-import { loginProps } from "../interfaces/auth";
+import { LoginResponse, loginProps } from "../interfaces/auth";
 
 export class AuthService {
   private userRepository: UserRepository;
@@ -17,7 +17,7 @@ export class AuthService {
   login = async ({
     email,
     password: pwdPrompt,
-  }: loginProps): Promise<AuthResponse> => {
+  }: loginProps): Promise<LoginResponse> => {
     try {
       const existUser = await this.userRepository.findUserByEmail(email);
 
