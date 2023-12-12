@@ -1,5 +1,5 @@
 import { Container } from "@/components/Container";
-import { RegisterForm } from "@/components/RegisterForm";
+import { RegisterForm } from "@/components/Forms/RegisterForm";
 
 export function Register() {
   return (

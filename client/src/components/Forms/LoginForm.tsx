@@ -11,8 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Toaster } from "@/components/ui/toaster";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { LoginSchema } from "@/types/auth";
-import { z } from "zod";
+import { LoginSchema, loginSchema } from "@/types/auth";
 import { api } from "@/lib/api";
 import Cookie from "js-cookie";
 import { useState } from "react";
@@ -24,8 +23,8 @@ export function LoginForm() {
   const setUser = useUserStore((state) => state.setUser);
   const [responseMessage, setResponseMessage] = useState("");
 
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -33,11 +32,15 @@ export function LoginForm() {
   });
   const { handleSubmit } = form;
 
-  const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = async (values: LoginSchema) => {
     try {
-      const { data } = await api.post("auth/login", values);
+      const { data } = await api.post("auth/login", values, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       const { token, name, surname } = data;
-      console.log({ data });
+
       setUser({ name, surname });
       Cookie.set("token", token);
       navigate("/");
@@ -54,7 +57,7 @@ export function LoginForm() {
     <>
       <Form {...form}>
         <form
-          className="flex flex-col gap-4 min-w-[40rem]"
+          className="flex flex-col gap-4 lg:min-w-[40rem]"
           onSubmit={handleSubmit(onSubmit)}
         >
           <FormField

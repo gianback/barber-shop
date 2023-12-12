@@ -1,5 +1,5 @@
 import { api } from "@/lib/api";
-import { RegisterSchema } from "@/types/auth";
+import { RegisterSchema, registerSchema } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -12,17 +12,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+} from "../ui/form";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { Toaster, toast } from "sonner";
 
 export function RegisterForm() {
   const navigate = useNavigate();
   const [responseMessage, setResponseMessage] = useState("");
 
-  const form = useForm<z.infer<typeof RegisterSchema>>({
-    resolver: zodResolver(RegisterSchema),
+  const form = useForm<RegisterSchema>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
       lastname: "",
@@ -33,7 +33,7 @@ export function RegisterForm() {
   });
   const { handleSubmit } = form;
 
-  const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
+  const onSubmit = async (values: RegisterSchema) => {
     try {
       await api.post("auth/register", values);
 
@@ -61,7 +61,7 @@ export function RegisterForm() {
     <>
       <Form {...form}>
         <form
-          className="flex flex-col gap-4 min-w-[40rem]"
+          className="flex flex-col gap-4 lg:min-w-[40rem]"
           onSubmit={handleSubmit(onSubmit)}
         >
           <FormField

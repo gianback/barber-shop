@@ -7,8 +7,6 @@ export function AdminList() {
 
   useAuth();
 
-  // verifyRoll();
-
   return (
     <>
       {isAdmin && (

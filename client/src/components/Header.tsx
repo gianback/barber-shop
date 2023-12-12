@@ -53,8 +53,8 @@ export function Header() {
             <AdminList />
           </ul>
         </div>
-        <div className="flex items-center gap-3">
-          {user.name && <span className="text-white">Hola {user.name}</span>}
+        <div className="flex items-center gap-8">
+          {user.name && <span className="text-white">¡Hola {user.name}!</span>}
           <Button
             onClick={handleGoToContact}
             className="bg-primary  hover:bg-primary/80 hidden lg:inline-block"

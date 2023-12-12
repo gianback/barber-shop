@@ -1,5 +1,5 @@
 import { Container } from "@/components/Container";
-import { LoginForm } from "@/components/LoginForm";
+import { LoginForm } from "@/components/Forms/LoginForm";
 
 export function Login() {
   return (

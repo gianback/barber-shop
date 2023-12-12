@@ -12,7 +12,7 @@ cloudinary.config({
   api_secret: CLOUDINARY_API_SECRET ?? "",
 });
 
-export const cloudinaryService = async (image: Buffer): Promise<string> => {
+export const cloudinaryService = async (image: Buffer) => {
   try {
     return new Promise((res, rej) => {
       const theTransformStream = cloudinary.uploader.upload_stream(

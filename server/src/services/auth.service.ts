@@ -101,4 +101,8 @@ export class AuthService {
     status: 200,
     message: "Valid roll",
   });
+  verifyToken = (): GeneralResponse => ({
+    status: 200,
+    message: "Valid token",
+  });
 }
