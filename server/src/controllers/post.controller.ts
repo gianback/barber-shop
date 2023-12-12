@@ -13,13 +13,12 @@ export class PostController {
 
   createPost = async (req: Request, res: Response) => {
     const { title, content, user_id } = req.body;
-    const file = req.files && (req.files.file as UploadedFile);
-    const buffer = file && Buffer.from(file.data);
-    const img = await cloudinaryService(buffer as Buffer);
+    const file = req.file;
+    const img = (await cloudinaryService(file?.buffer as Buffer)) as any;
 
     const { message, status } = await this.postModel.createPost({
       content,
-      img,
+      img: img.url,
       title,
       user_id,
     });
@@ -48,11 +47,10 @@ export class PostController {
       Object.entries(restPost).filter(([key, value]) => value !== undefined)
     );
     if (req.files) {
-      const file = req.files.file as UploadedFile;
-      const buffer = file && Buffer.from(file.data);
-      const imgUrl = await cloudinaryService(buffer as Buffer);
+      const file = req.file;
+      const imgUrl = (await cloudinaryService(file?.buffer as Buffer)) as any;
 
-      newPropertiesPost.img = imgUrl;
+      newPropertiesPost.img = imgUrl.url;
     }
 
     const { message, status } = await this.postModel.updatePost({

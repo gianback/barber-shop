@@ -38,4 +38,9 @@ export class AuthController {
 
     return res.status(response.status).json(response);
   };
+  verifyToken = (req: Request, res: Response) => {
+    const response = this.authRepository.verifyToken();
+
+    return res.status(response.status).json(response);
+  };
 }

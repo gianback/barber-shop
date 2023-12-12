@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { Appointment, Post } from "../lib/validate-inputs";
+import { Appointment } from "../lib/validate-inputs";
 import { ZodError } from "zod";
 
 export const validateAppointment = (
@@ -8,7 +8,7 @@ export const validateAppointment = (
   next: NextFunction
 ) => {
   const { date, service_id, user_id, paymentId } = req.body;
-  const img = req.files && req.files[0];
+
   const appointment = {
     date,
     service_id,

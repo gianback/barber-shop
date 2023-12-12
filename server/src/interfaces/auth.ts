@@ -14,4 +14,5 @@ export interface AuthRepository {
   generateToken({ id, roll }: { id: string; roll: string }): string;
   comparePwd(pwdPrompt: string, password: string): Promise<boolean>;
   verifyRoll(): GeneralResponse;
+  verifyToken(): GeneralResponse;
 }
