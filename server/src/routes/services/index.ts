@@ -4,6 +4,8 @@ import { ServiceController } from "../../controllers/service.controller";
 import { validateRoll } from "../../middlewares/validate-roll.middleware";
 import { validateService } from "../../middlewares/validate-service.middleware";
 import { validateToken } from "../../middlewares/validate-token.middleware";
+import multer from "multer";
+const upload = multer();
 
 export const ServiceRoute = (serviceModel: ServiceRepository) => {
   const serviceRoute = Router();
@@ -12,6 +14,7 @@ export const ServiceRoute = (serviceModel: ServiceRepository) => {
 
   serviceRoute.post(
     "/",
+    upload.single("img"),
     validateToken,
     validateRoll,
     validateService,

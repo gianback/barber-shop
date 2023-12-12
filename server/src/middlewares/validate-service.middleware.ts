@@ -1,36 +1,27 @@
 import { NextFunction, Request, Response } from "express";
 import { Service } from "../lib/validate-inputs";
 import { ZodError } from "zod";
-
-export const validateService = (
+export const validateService = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   const { name, description, price } = req.body;
-  const img = req.files && req.files[0];
-  const post = {
+  const file = req.file;
+  const service = {
     name,
     description,
-    price,
-    img,
+    price: +price,
+    img: file,
   };
-
   try {
-    Service.parse(post);
+    Service.parse(service);
 
     next();
   } catch (error) {
     if (error instanceof ZodError) {
-      return res.status(400).json({
-        message: error.issues.map(({ message }) => {
-          message;
-        }),
-      });
     }
 
     throw new Error("Error middleware service");
   }
-
-  next();
 };

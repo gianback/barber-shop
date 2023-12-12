@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-const ACCEPTED_IMAGE_TYPES = ["jpeg", "jpg", "png", "webp"];
-
 export const User = z.object({
   name: z
     .string({
@@ -97,12 +95,7 @@ export const Post = z.object({
     .max(255, {
       message: "Slug must be between 1 and 255 characters",
     }),
-  img: z
-    .any()
-    .refine(
-      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-      "Only .jpg, .jpeg, .png and .webp formats are supported."
-    ),
+  img: z.custom<File>(),
 });
 export const Service = z.object({
   name: z
@@ -124,25 +117,23 @@ export const Service = z.object({
     .min(1, {
       message: "Description must be min 1 character",
     }),
-  img: z
-    .any()
-    .refine(
-      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-      "Only .jpg, .jpeg, .png and .webp formats are supported."
-    ),
+  img: z.custom<File>(),
   price: z
     .number({
-      required_error: "Price is required",
-      invalid_type_error: "Price must be a number",
+      required_error: "Precio es requerido.",
+      invalid_type_error: "Precio debe ser un número.",
+    })
+    .min(1, {
+      message: "Precio es requerido.",
+    })
+    .max(99999.99, {
+      message: "Precio debe ser máximo 99999.99",
+    })
+    .multipleOf(0.01, {
+      message: "Precio debe ser máximo 2 decimales.",
     })
     .nonnegative({
-      message: "Price must be a positive number",
-    })
-    .finite({
-      message: "Price must be a finite number",
-    })
-    .lte(7, {
-      message: "Price must be less than 7 digits",
+      message: "Precio debe ser mayor a 0.",
     }),
 });
 export const Appointment = z.object({

@@ -8,12 +8,12 @@ export const validatePost = (
   next: NextFunction
 ) => {
   const { title, content, user_id } = req.body;
-  const img = req.files && req.files[0];
+  const img = req.file;
   const post = {
     title,
     content,
     user_id,
-    img,
+    img: img?.buffer,
   };
 
   try {

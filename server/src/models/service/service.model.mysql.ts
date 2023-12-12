@@ -24,7 +24,7 @@ export class ServiceModelMysql {
           message: `Service ${service.name} already exists`,
         };
       }
-
+      console.log(error);
       throw new Error("Something went wrong creating the service with MYSQL");
     }
   }
