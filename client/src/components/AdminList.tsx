@@ -1,11 +1,8 @@
-import { useAuth } from "@/hooks/useAuth";
 import { useAuthStore } from "@/store/auth.store";
 import { Link } from "react-router-dom";
 
 export function AdminList() {
   const isAdmin = useAuthStore((state) => state.isAdmin);
-
-  useAuth();
 
   return (
     <>

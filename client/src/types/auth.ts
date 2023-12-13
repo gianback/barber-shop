@@ -3,7 +3,11 @@ import * as z from "zod";
 export type LoginSchema = z.infer<typeof loginSchema>;
 export type RegisterSchema = z.infer<typeof registerSchema>;
 export type CreateServiceSchema = z.infer<typeof createServiceSchema>;
-
+export type IService = CreateServiceSchema & {
+  id: number;
+  img: string;
+  slug: string;
+};
 export const loginSchema = z.object({
   email: z
     .string()

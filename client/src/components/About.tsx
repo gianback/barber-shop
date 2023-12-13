@@ -16,10 +16,10 @@ export function About() {
           </li>
         </ul>
         <div className="mt-8 lg:mt-0 [&>p]:text-sm lg:[&>p]:text-base">
-          <h2 className="text-2xl lg:text-4xl font-bold mb-16">
+          <h2 className="text-white text-2xl lg:text-4xl font-bold mb-16">
             Sobre nosotros
           </h2>
-          <p>
+          <p className="text-white">
             En nuestra barbería, nos apasiona crear experiencias únicas para
             cada cliente. Más allá de ser expertos en el arte de cortar cabello,
             somos un espacio que celebra la autenticidad y la individualidad.
@@ -27,7 +27,7 @@ export function About() {
             nuestro talentoso equipo se destaca por su habilidad técnica y
             compromiso con las preferencias únicas de cada persona.
           </p>
-          <p className="mt-5 lg:mt-10">
+          <p className="mt-5 lg:mt-10 text-white">
             Fusionamos técnicas clásicas con las últimas tendencias para ofrecer
             un servicio personalizado que refleje la personalidad de cada
             cliente. En nuestra barbería, no solo transformamos cabellos, sino

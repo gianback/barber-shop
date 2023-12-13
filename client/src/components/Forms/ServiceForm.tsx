@@ -57,7 +57,6 @@ export function ServiceForm() {
     formData.set("img", files[0].file as File);
 
     try {
-      console.log(Object.fromEntries(formData));
       const { data } = await api.post("services", formData);
       reset();
       setFiles([]);

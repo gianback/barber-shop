@@ -8,10 +8,10 @@ export function Banner() {
     >
       <div className="relative z-[5]">
         <Container>
-          <h1 className="text-3xl lg:text-5xl font-bold max-w-[35ch] mx-auto text-center">
+          <h1 className="text-white text-3xl lg:text-5xl font-bold max-w-[35ch] mx-auto text-center">
             EL ESTILO ES UN REFLEJO DE TU ACTITUD Y TU PERSONALIDAD
           </h1>
-          <p className="text-base lg:text-3xl text-center mt-8">
+          <p className="text-white text-base lg:text-3xl text-center mt-8">
             Horario de apertura: 09:00 a 18:00
           </p>
         </Container>

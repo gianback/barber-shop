@@ -2,10 +2,13 @@ import { api } from "@/lib/api";
 import { useAuthStore } from "@/store/auth.store";
 import { useCallback, useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useUserStore } from "@/store/user.store";
 export function useAuth() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const setUser = useUserStore((state) => state.setUser);
+  const { pathname } = useLocation();
   const setIsAdmin = useAuthStore().setIsAdmin;
 
   const verifyRoll = useCallback(async () => {
@@ -27,11 +30,14 @@ export function useAuth() {
       setIsAdmin(data.status === 200);
     } catch (error) {
       Cookies.remove("token");
-      navigate("/login");
+      setUser({ name: "", surname: "" });
+      if (pathname !== "/") {
+        navigate("/login");
+      }
     } finally {
       setIsLoading(false);
     }
-  }, [setIsAdmin, navigate]);
+  }, [setIsAdmin, setUser, navigate, pathname]);
 
   useEffect(() => {
     verifyToken();

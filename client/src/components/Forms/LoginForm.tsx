@@ -20,6 +20,7 @@ import { useUserStore } from "@/store/user.store";
 
 export function LoginForm() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const setUser = useUserStore((state) => state.setUser);
   const [responseMessage, setResponseMessage] = useState("");
 
@@ -34,6 +35,7 @@ export function LoginForm() {
 
   const onSubmit = async (values: LoginSchema) => {
     try {
+      setIsLoading(true);
       const { data } = await api.post("auth/login", values, {
         headers: {
           "Content-Type": "application/json",
@@ -50,6 +52,8 @@ export function LoginForm() {
       setTimeout(() => {
         setResponseMessage("");
       }, 2500);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -90,7 +94,10 @@ export function LoginForm() {
               </FormItem>
             )}
           />
-          <Button className="bg-primary mt-4 hover:bg-primary/80">
+          <Button
+            disabled={isLoading}
+            className="bg-primary mt-4 hover:bg-primary/80"
+          >
             Enviar
           </Button>
           {responseMessage && (

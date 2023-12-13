@@ -36,7 +36,7 @@ export function Header() {
           <ul
             className={`${
               isOpen ? "translate-y-[0%]" : "-translate-y-[100%]"
-            } fixed lg:translate-y-0 lg:bg-transparent z-[5]  rounded-br-xl rounded-bl-xl lg:rounded-none  pt-16 lg:pt-0 flex-col bg-primary inset-0 bottom-auto lg:flex-row top-0 lg:static flex items-center [&>li]:p-4 [&>li]:cursor-pointer [&>li]:rounded-lg [&>li]:transition-colors duration-75 ease-linear [&>li:hover]:bg-primary`}
+            } [&>li]:text-white fixed lg:translate-y-0 lg:bg-transparent z-[5]  rounded-br-xl rounded-bl-xl lg:rounded-none  pt-16 lg:pt-0 flex-col bg-primary inset-0 bottom-auto lg:flex-row top-0 lg:static flex items-center [&>li]:p-4 [&>li]:cursor-pointer [&>li]:rounded-lg [&>li]:transition-colors duration-75 ease-linear [&>li:hover]:text-black [&>li:hover]:bg-primary`}
           >
             <li>
               {/* <Link to="/">Inicio</Link> */}
