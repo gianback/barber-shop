@@ -56,15 +56,15 @@ export const User = z.object({
     }),
 });
 export const Post = z.object({
-  name: z
+  title: z
     .string({
-      required_error: "Name is required",
-      invalid_type_error: "Name must be a string",
+      required_error: "title is required",
+      invalid_type_error: "title must be a string",
     })
     .trim()
     .min(1)
     .max(255, {
-      message: "name must be between 1 and 255 characters",
+      message: "title must be between 1 and 255 characters",
     }),
   description: z
     .string({
