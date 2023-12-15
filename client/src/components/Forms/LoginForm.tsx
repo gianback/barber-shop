@@ -69,7 +69,7 @@ export function LoginForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="text-white">Email</FormLabel>
                 <FormControl>
                   <Input
                     type="email"
@@ -86,7 +86,7 @@ export function LoginForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Contraseña</FormLabel>
+                <FormLabel className="text-white">Contraseña</FormLabel>
                 <FormControl>
                   <Input type="password" placeholder="********" {...field} />
                 </FormControl>

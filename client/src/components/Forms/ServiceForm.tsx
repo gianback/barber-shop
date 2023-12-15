@@ -79,7 +79,9 @@ export function ServiceForm() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nombre del servicio</FormLabel>
+                <FormLabel className="text-white">
+                  Nombre del servicio
+                </FormLabel>
                 <FormControl>
                   <Input
                     type="text"
@@ -96,7 +98,9 @@ export function ServiceForm() {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Descricion del servicio</FormLabel>
+                <FormLabel className="text-white">
+                  Descricion del servicio
+                </FormLabel>
                 <FormControl>
                   <Textarea
                     style={{ resize: "none" }}
@@ -108,7 +112,7 @@ export function ServiceForm() {
               </FormItem>
             )}
           />
-          <label>Imagen del servicio</label>
+          <label className="text-white">Imagen del servicio</label>
           <Dropzone onChange={updateFiles} value={files} required name="img">
             {files.map((file, index) => (
               <FileMosaic
@@ -126,7 +130,9 @@ export function ServiceForm() {
             name="price"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Precio del servicio</FormLabel>
+                <FormLabel className="text-white">
+                  Precio del servicio
+                </FormLabel>
                 <FormControl>
                   <Input
                     {...field}

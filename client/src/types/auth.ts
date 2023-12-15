@@ -8,6 +8,14 @@ export type IService = CreateServiceSchema & {
   img: string;
   slug: string;
 };
+
+export type CreateBlogSchema = z.infer<typeof createBlogSchema>;
+
+export type IBlog = CreateBlogSchema & {
+  id: number;
+  img: string;
+};
+
 export const loginSchema = z.object({
   email: z
     .string()
@@ -56,7 +64,6 @@ export const createServiceSchema = z.object({
     .max(255, {
       message: "Descripción debe ser máximo 255 caracteres.",
     }),
-  // img: z.custom<File>(),
   price: z
     .number({
       required_error: "Precio es requerido.",
@@ -73,5 +80,37 @@ export const createServiceSchema = z.object({
     })
     .nonnegative({
       message: "Precio debe ser mayor a 0.",
+    }),
+});
+
+export const createBlogSchema = z.object({
+  title: z
+    .string({
+      required_error: "title is required",
+      invalid_type_error: "title must be a string",
+    })
+    .trim()
+    .min(1)
+    .max(255, {
+      message: "title must be between 1 and 255 characters",
+    }),
+  description: z
+    .string({
+      required_error: "Description is required",
+      invalid_type_error: "Description must be a string",
+    })
+    .trim()
+    .min(1)
+    .max(255, {
+      message: "Description must be between 1 and 255 characters",
+    }),
+  content: z
+    .string({
+      required_error: "Content is required",
+      invalid_type_error: "Content must be a string",
+    })
+    .trim()
+    .min(1, {
+      message: "Content must be min 1 character",
     }),
 });

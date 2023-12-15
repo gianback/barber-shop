@@ -1,10 +1,17 @@
-import { AuthIsntLoggedProvider } from "@/components/providers/AuthProvider";
+import {
+  AuthIsLoggedProvider,
+  AuthIsntLoggedProvider,
+} from "@/components/providers/AuthProvider";
 import { Layout } from "@/components/Layout";
-import { Home } from "@/pages/Home";
-import { Login } from "@/pages/Login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { CreateService } from "@/pages/CreateService";
-import { Register } from "@/pages/Register";
+import {
+  Contact,
+  CreateBlog,
+  CreateService,
+  Home,
+  Login,
+  Register,
+} from "@/pages";
 
 export function Router() {
   return (
@@ -13,6 +20,17 @@ export function Router() {
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/create-service" element={<CreateService />} />
+          <Route path="/create-blog" element={<CreateBlog />} />
+          {/* 
+          TODO: VALIDAR SI HAY TOKEN */}
+          <Route
+            path="/contact"
+            element={
+              <AuthIsLoggedProvider>
+                <Contact />
+              </AuthIsLoggedProvider>
+            }
+          />
         </Route>
         <Route
           path="/login"
