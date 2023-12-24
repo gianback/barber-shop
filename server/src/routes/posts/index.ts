@@ -25,7 +25,7 @@ export const PostRoute = (postModel: PostRepository) => {
     validateRoll,
     postController.deletePost
   );
-  postRoute.get("/", validateToken, postController.getPosts);
+  postRoute.get("/", postController.getPosts);
   postRoute.patch(
     "/:id",
     validateToken,

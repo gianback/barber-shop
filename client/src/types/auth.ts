@@ -14,6 +14,8 @@ export type CreateBlogSchema = z.infer<typeof createBlogSchema>;
 export type IBlog = CreateBlogSchema & {
   id: number;
   img: string;
+  slug: string;
+  createdAt: string;
 };
 
 export const loginSchema = z.object({

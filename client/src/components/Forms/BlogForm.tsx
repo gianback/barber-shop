@@ -18,8 +18,12 @@ import { Toaster, toast } from "sonner";
 import { Dropzone, ExtFile, FileMosaic } from "@files-ui/react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Textarea } from "../ui/textarea";
+import { Spinner } from "../Spinner";
+
 export function BlogForm() {
   const [responseMessage, setResponseMessage] = useState("");
+  const [isLoading, setSetIsLoading] = useState(false);
   const [imageError, setImageError] = useState("");
   const [files, setFiles] = useState<ExtFile[]>([]);
   const formWasReseted = useRef(false);
@@ -54,6 +58,7 @@ export function BlogForm() {
     }
     form.append("img", files[0].file as File);
     try {
+      setSetIsLoading(true);
       await api.post("/posts", form);
 
       toast.success("Blog creado!", {
@@ -72,6 +77,8 @@ export function BlogForm() {
       setTimeout(() => {
         setResponseMessage("");
       }, 2500);
+    } finally {
+      setSetIsLoading(false);
     }
   };
 
@@ -84,7 +91,7 @@ export function BlogForm() {
     <>
       <Form {...form}>
         <form
-          className="flex flex-col gap-4 lg:min-w-[40rem]"
+          className="flex flex-col gap-4 py-8 lg:min-w-[40rem]"
           onSubmit={handleSubmit(onSubmit)}
         >
           <FormField
@@ -109,8 +116,8 @@ export function BlogForm() {
                   Descripcion del Blog
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    type="text"
+                  <Textarea
+                    style={{ resize: "none" }}
                     placeholder="Descripción blog"
                     {...field}
                   />
@@ -134,7 +141,7 @@ export function BlogForm() {
                         ? field.onChange("")
                         : field.onChange(sanitizeHtml(value))
                     }
-                    className="text-white"
+                    className="text-white max-w-[40rem]"
                     theme="snow"
                   />
                 </FormControl>
@@ -157,7 +164,7 @@ export function BlogForm() {
           {imageError && <p className="text-red-500">{imageError}</p>}
 
           <Button className="bg-primary mt-4 hover:bg-primary/80">
-            Enviar
+            {isLoading ? <Spinner /> : "Enviar"}
           </Button>
           {responseMessage && (
             <p className="text-red-500">Credenciales Invalidas</p>

@@ -12,6 +12,7 @@ import {
   Login,
   Register,
 } from "@/pages";
+import { BlogDetails } from "@/pages/BlogDetail";
 
 export function Router() {
   return (
@@ -19,6 +20,7 @@ export function Router() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/blog/:id" element={<BlogDetails />} />
           <Route path="/create-service" element={<CreateService />} />
           <Route path="/create-blog" element={<CreateBlog />} />
           {/* 
