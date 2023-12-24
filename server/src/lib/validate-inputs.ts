@@ -85,16 +85,6 @@ export const Post = z.object({
     .min(1, {
       message: "Content must be min 1 character",
     }),
-  slug: z
-    .string({
-      required_error: "Slug is required",
-      invalid_type_error: "Slug must be a string",
-    })
-    .trim()
-    .min(1)
-    .max(255, {
-      message: "Slug must be between 1 and 255 characters",
-    }),
   img: z.custom<File>(),
 });
 export const Service = z.object({

@@ -8,6 +8,9 @@ export const validateService = async (
 ) => {
   const { name, description, price } = req.body;
   const file = req.file;
+  if (!file) {
+    return res.status(400).json({ message: "Img is required" });
+  }
   const service = {
     name,
     description,
@@ -20,6 +23,13 @@ export const validateService = async (
     next();
   } catch (error) {
     if (error instanceof ZodError) {
+      const errorFormated = error.issues.map(({ message }) => {
+        message;
+      });
+      console.log({ errorFormated });
+      return res.status(400).json({
+        message: errorFormated,
+      });
     }
 
     throw new Error("Error middleware service");

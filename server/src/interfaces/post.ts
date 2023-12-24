@@ -4,8 +4,9 @@ export interface PostInterface {
   id?: string;
   title: string;
   content: string;
+  description: string;
   img: string;
-  user_id: string;
+  slug: string;
 }
 
 export interface PostRepository {

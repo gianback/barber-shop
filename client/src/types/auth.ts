@@ -86,31 +86,35 @@ export const createServiceSchema = z.object({
 export const createBlogSchema = z.object({
   title: z
     .string({
-      required_error: "title is required",
-      invalid_type_error: "title must be a string",
-    })
-    .trim()
-    .min(1)
-    .max(255, {
-      message: "title must be between 1 and 255 characters",
-    }),
-  description: z
-    .string({
-      required_error: "Description is required",
-      invalid_type_error: "Description must be a string",
-    })
-    .trim()
-    .min(1)
-    .max(255, {
-      message: "Description must be between 1 and 255 characters",
-    }),
-  content: z
-    .string({
-      required_error: "Content is required",
-      invalid_type_error: "Content must be a string",
+      required_error: "Se requiere un título",
+      invalid_type_error: "El título debe ser una cadena de texto",
     })
     .trim()
     .min(1, {
-      message: "Content must be min 1 character",
+      message: "El título debe tener al menos 1 caracter",
+    })
+    .max(255, {
+      message: "El título debe tener entre 1 y 255 caracteres",
+    }),
+  description: z
+    .string({
+      required_error: "Se requiere una descripción",
+      invalid_type_error: "La descripción debe ser una cadena de texto",
+    })
+    .trim()
+    .min(1, {
+      message: "La descripción debe tener al menos 1 caracter",
+    })
+    .max(255, {
+      message: "La descripción debe tener entre 1 y 255 caracteres",
+    }),
+  content: z
+    .string({
+      required_error: "Se requiere contenido",
+      invalid_type_error: "El contenido debe ser una cadena de texto",
+    })
+    .trim()
+    .min(1, {
+      message: "El contenido debe tener al menos 1 caracter",
     }),
 });

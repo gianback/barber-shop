@@ -1,8 +1,9 @@
 import { api } from "@/lib/api";
 import { CreateBlogSchema, createBlogSchema } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import sanitizeHtml from "sanitize-html";
 import {
   Form,
   FormControl,
@@ -15,15 +16,22 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Toaster, toast } from "sonner";
 import { Dropzone, ExtFile, FileMosaic } from "@files-ui/react";
-
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 export function BlogForm() {
   const [responseMessage, setResponseMessage] = useState("");
   const [imageError, setImageError] = useState("");
   const [files, setFiles] = useState<ExtFile[]>([]);
+  const formWasReseted = useRef(false);
   const updateFiles = (incommingFiles: ExtFile[]) => {
     setFiles(incommingFiles);
-    //even your own upload implementation
+    if (incommingFiles.length === 0) {
+      setImageError("Debes subir una imagen");
+    } else {
+      setImageError("");
+    }
   };
+
   const form = useForm<CreateBlogSchema>({
     resolver: zodResolver(createBlogSchema),
     defaultValues: {
@@ -32,15 +40,32 @@ export function BlogForm() {
       description: "",
     },
   });
-  const { handleSubmit } = form;
+  const { handleSubmit, reset } = form;
 
   const onSubmit = async (values: CreateBlogSchema) => {
+    if (files.length === 0) {
+      setImageError("Debes subir una imagen");
+      return;
+    }
+
+    const form = new FormData();
+    for (const key in values) {
+      form.append(key, values[key as keyof CreateBlogSchema]);
+    }
+    form.append("img", files[0].file as File);
     try {
-      await api.post("/posts", values);
+      await api.post("/posts", form);
 
       toast.success("Blog creado!", {
         duration: 20000,
       });
+      formWasReseted.current = true;
+      reset();
+      setFiles([]);
+      setTimeout(() => {
+        formWasReseted.current = false;
+      }, 2000);
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setResponseMessage(error.data.message);
@@ -50,12 +75,11 @@ export function BlogForm() {
     }
   };
 
-  //   const handleSuccessRegister = () => {
-  //     navigate("/login");
-  //   };
   const removeFile = () => {
     setFiles([]);
+    setImageError("Debes subir una imagen");
   };
+
   return (
     <>
       <Form {...form}>
@@ -70,11 +94,7 @@ export function BlogForm() {
               <FormItem>
                 <FormLabel className="text-white">Titulo del blog</FormLabel>
                 <FormControl>
-                  <Input
-                    type="text"
-                    placeholder="example@example.com"
-                    {...field}
-                  />
+                  <Input type="text" placeholder="Titulo blog" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -89,7 +109,11 @@ export function BlogForm() {
                   Descripcion del Blog
                 </FormLabel>
                 <FormControl>
-                  <Input type="text" placeholder="Garcia" {...field} />
+                  <Input
+                    type="text"
+                    placeholder="Descripción blog"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -102,7 +126,17 @@ export function BlogForm() {
               <FormItem>
                 <FormLabel className="text-white">Contenido del blog</FormLabel>
                 <FormControl>
-                  <Input type="text" placeholder="Perez" {...field} />
+                  <ReactQuill
+                    {...field}
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    onChange={(value, delta: any) =>
+                      delta.ops[0].delete && !formWasReseted.current
+                        ? field.onChange("")
+                        : field.onChange(sanitizeHtml(value))
+                    }
+                    className="text-white"
+                    theme="snow"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -7,30 +7,36 @@ export const validatePost = (
   res: Response,
   next: NextFunction
 ) => {
-  const { title, content, user_id } = req.body;
+  const { title, content, description } = req.body;
   const img = req.file;
+
+  if (!img) {
+    return res.status(400).json({
+      message: "Image is required",
+    });
+  }
+
   const post = {
     title,
     content,
-    user_id,
-    img: img?.buffer,
+    description,
+    img,
   };
 
   try {
-    const result = Post.parse(post);
-
+    Post.parse(post);
     next();
   } catch (error) {
     if (error instanceof ZodError) {
+      const errorFormated = error.issues.map(({ message }) => {
+        message;
+      });
+      console.log({ errorFormated });
       return res.status(400).json({
-        message: error.issues.map(({ message }) => {
-          message;
-        }),
+        message: errorFormated,
       });
     }
 
     throw new Error("Error middleware post");
   }
-
-  next();
 };
