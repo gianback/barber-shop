@@ -1,9 +1,9 @@
 import { CSSProperties, useEffect, useState } from "react";
 import { Container } from "./Container";
 import { api } from "@/lib/api";
-import { IService } from "@/types/auth";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
+import { IService } from "@/types/service";
 
 export function Services() {
   const [setserviceList, setSetserviceList] = useState<IService[]>([]);
@@ -36,7 +36,7 @@ export function Services() {
           fusionan habilidad artesanal con un ambiente acogedor. Descubre el
           arte de la barbería con nosotros.
         </p>
-        <div className="max-w-[70rem]  mx-auto gap-8 mt-7 lg:mt-14 grid md:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto gap-8 mt-7 lg:mt-14 grid md:grid-cols-2 lg:grid-cols-3">
           {setserviceList?.map(
             ({ description, id, img, name, price, slug }) => (
               <article
@@ -51,7 +51,7 @@ export function Services() {
                 <picture>
                   <img src={img} className="w-full object-cover" alt="" />
                 </picture>
-                <div className="py-4 px-3 flex flex-col h-full">
+                <div className="py-7 px-5 flex flex-col h-full">
                   <div className="flex justify-between gap-4 items-center">
                     <h3 className="font-bold">{name}</h3>
                     <span className="flex-shrink-0 bg-black p-1 px-2 rounded-md text-white">

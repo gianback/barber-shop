@@ -5,8 +5,9 @@ interface UserState {
   user: {
     name: string;
     surname: string;
+    lastname: string;
   };
-  setUser: (user: { name: string; surname: string }) => void;
+  setUser: (user: { name: string; surname: string; lastname: string }) => void;
 }
 
 export const useUserStore = create<UserState>()(
@@ -15,6 +16,7 @@ export const useUserStore = create<UserState>()(
       user: {
         name: "",
         surname: "",
+        lastname: "",
       },
       setUser: (user) => set({ user }),
     }),

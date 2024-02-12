@@ -41,14 +41,13 @@ export function LoginForm() {
           "Content-Type": "application/json",
         },
       });
-      const { token, name, surname } = data;
-
-      setUser({ name, surname });
+      const { token, name, surname, lastname } = data;
+      setUser({ name, surname, lastname });
       Cookie.set("token", token);
       navigate("/");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      setResponseMessage(error.data.message);
+      setResponseMessage(error.response.data.message);
       setTimeout(() => {
         setResponseMessage("");
       }, 2500);
@@ -61,7 +60,7 @@ export function LoginForm() {
     <>
       <Form {...form}>
         <form
-          className="flex flex-col gap-4 lg:min-w-[40rem]"
+          className="flex flex-col gap-4 w-[45rem] mx-auto max-w-full"
           onSubmit={handleSubmit(onSubmit)}
         >
           <FormField
@@ -98,7 +97,7 @@ export function LoginForm() {
             disabled={isLoading}
             className="bg-primary mt-4 hover:bg-primary/80"
           >
-            Enviar
+            {isLoading ? "Cargando..." : "Iniciar Sesión"}
           </Button>
           {responseMessage && (
             <p className="text-red-500">Credenciales Invalidas</p>

@@ -1,5 +1,5 @@
 import { api } from "@/lib/api";
-import { CreateBlogSchema, createBlogSchema } from "@/types/auth";
+import { CreateBlogSchema, createBlogSchema } from "@/types/blog";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -91,7 +91,7 @@ export function BlogForm() {
     <>
       <Form {...form}>
         <form
-          className="flex flex-col gap-4 py-8 lg:min-w-[40rem]"
+          className="flex flex-col gap-4 py-8 w-[45rem] mx-auto max-w-full"
           onSubmit={handleSubmit(onSubmit)}
         >
           <FormField

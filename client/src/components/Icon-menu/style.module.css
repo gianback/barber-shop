@@ -27,10 +27,10 @@
 }
 .Icon-Menu.change {
   border: 2px solid white;
-  @apply bg-primary rounded-full;
+  @apply bg-primary rounded-full border-black;
 }
 .Icon-Menu.change span {
-  @apply bg-white;
+  @apply bg-black;
 }
 .Icon-Menu.change span:nth-child(1) {
   @apply w-14;

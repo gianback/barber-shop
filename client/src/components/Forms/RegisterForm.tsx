@@ -60,7 +60,7 @@ export function RegisterForm() {
     <>
       <Form {...form}>
         <form
-          className="flex flex-col gap-4 lg:min-w-[40rem]"
+          className="flex flex-col gap-4 w-[45rem] mx-auto max-w-full"
           onSubmit={handleSubmit(onSubmit)}
         >
           <FormField

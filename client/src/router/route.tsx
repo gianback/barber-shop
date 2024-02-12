@@ -1,7 +1,4 @@
-import {
-  AuthIsLoggedProvider,
-  AuthIsntLoggedProvider,
-} from "@/components/providers/AuthProvider";
+import { AuthIsntLoggedProvider } from "@/components/providers/AuthProvider";
 import { Layout } from "@/components/Layout";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
@@ -23,16 +20,7 @@ export function Router() {
           <Route path="/blog/:id" element={<BlogDetails />} />
           <Route path="/create-service" element={<CreateService />} />
           <Route path="/create-blog" element={<CreateBlog />} />
-          {/* 
-          TODO: VALIDAR SI HAY TOKEN */}
-          <Route
-            path="/contact"
-            element={
-              <AuthIsLoggedProvider>
-                <Contact />
-              </AuthIsLoggedProvider>
-            }
-          />
+          <Route path="/contact" element={<Contact />} />
         </Route>
         <Route
           path="/login"

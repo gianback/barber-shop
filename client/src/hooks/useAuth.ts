@@ -1,6 +1,6 @@
 import { api } from "@/lib/api";
 import { useAuthStore } from "@/store/auth.store";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import Cookies from "js-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUserStore } from "@/store/user.store";
@@ -30,7 +30,7 @@ export function useAuth() {
       setIsAdmin(data.status === 200);
     } catch (error) {
       Cookies.remove("token");
-      setUser({ name: "", surname: "" });
+      setUser({ name: "", surname: "", lastname: "" });
       if (pathname !== "/") {
         navigate("/login");
       }
@@ -38,11 +38,6 @@ export function useAuth() {
       setIsLoading(false);
     }
   }, [setIsAdmin, setUser, navigate, pathname]);
-
-  useEffect(() => {
-    verifyToken();
-    verifyRoll();
-  }, [verifyToken, verifyRoll]);
 
   return {
     isLoading,
