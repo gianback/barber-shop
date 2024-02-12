@@ -8,12 +8,13 @@ import { PostModelMysql } from "../models/post/post.model.mysql";
 import { AuthRoute } from "./auth";
 import { AuthService } from "../services/auth.service";
 import { UserModelMysql } from "../models/user/user.model.mysql";
-
+import { PaymentRoute } from "./payments";
 const router = Router();
 
 router.use("/appointments", AppointmentRoute(AppointmentModelMysql));
 router.use("/services", ServiceRoute(ServiceModelMysql));
 router.use("/posts", PostRoute(PostModelMysql));
+router.use("/payments", PaymentRoute);
 
 const authService = new AuthService(UserModelMysql);
 

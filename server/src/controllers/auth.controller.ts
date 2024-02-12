@@ -10,13 +10,15 @@ export class AuthController {
   login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
-    const { status, message, token, name, surname } =
+    const { status, message, token, name, surname, lastname } =
       await this.authRepository.login({
         email,
         password,
       });
-
-    return res.status(status as number).json({ message, token, name, surname });
+    console.log({ status, message, token, name, surname, lastname });
+    return res
+      .status(status as number)
+      .json({ message, token, name, surname, lastname });
   };
   register = async (req: Request, res: Response) => {
     const { email, lastname, name, password, surname } = req.body;

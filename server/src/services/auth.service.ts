@@ -29,7 +29,7 @@ export class AuthService {
       }
 
       const user = await this.userRepository.findUserByEmail(email);
-      const { password, id, roll, name, surname } = user;
+      const { password, id, roll, name, surname, lastname } = user;
 
       const isValidPassword = await this.comparePwd(pwdPrompt, password);
 
@@ -49,6 +49,7 @@ export class AuthService {
         message: "Login successfull",
         name,
         surname,
+        lastname,
         token,
       };
     } catch (error) {
