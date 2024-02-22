@@ -17,7 +17,7 @@ export function Router() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/blog/:id" element={<BlogDetails />} />
+          <Route path="/blog/:slug" element={<BlogDetails />} />
           <Route path="/create-service" element={<CreateService />} />
           <Route path="/create-blog" element={<CreateBlog />} />
           <Route path="/contact" element={<Contact />} />

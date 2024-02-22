@@ -102,7 +102,6 @@ export function ContactForm() {
   // };
   const onSubmit = async (values: ContactInterface) => {
     console.log({ values });
-
     return;
     try {
       setIsLoading(true);
