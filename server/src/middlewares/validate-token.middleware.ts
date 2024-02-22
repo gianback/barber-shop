@@ -8,7 +8,6 @@ export const validateToken = (
   next: NextFunction
 ) => {
   const { token } = req.cookies;
-  console.log({ token });
   if (!token) {
     return res.status(400).json({
       message: "Token is required",

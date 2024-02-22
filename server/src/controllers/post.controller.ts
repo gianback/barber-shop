@@ -1,5 +1,3 @@
-import { UploadedFile } from "express-fileupload";
-
 import { PostRepository, PostUpdateOmitId } from "../interfaces/post";
 import { cloudinaryService } from "../services/cloudinary.service";
 import { Request, Response } from "express";
@@ -25,13 +23,25 @@ export class PostController {
       title,
       slug,
     });
-    console.log({ status });
     return res.status(status).json({ message });
   };
 
   getPosts = async (req: Request, res: Response) => {
     const posts = await this.postModel.getPosts();
 
+    return res.status(200).json(posts);
+  };
+
+  getPostBySlug = async (req: Request, res: Response) => {
+    const { slug } = req.params;
+
+    const post = await this.postModel.getPostBySlug(slug);
+    return res.status(200).json(post);
+  };
+  getRelatedPost = async (req: Request, res: Response) => {
+    const { slug } = req.params;
+
+    const posts = await this.postModel.getRelatedPost(slug);
     return res.status(200).json(posts);
   };
 

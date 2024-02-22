@@ -26,6 +26,8 @@ export const PostRoute = (postModel: PostRepository) => {
     postController.deletePost
   );
   postRoute.get("/", postController.getPosts);
+  postRoute.get("/:slug", postController.getPostBySlug);
+  postRoute.get("/:slug/related", postController.getRelatedPost);
   postRoute.patch(
     "/:id",
     validateToken,

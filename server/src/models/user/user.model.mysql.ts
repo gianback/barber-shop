@@ -49,7 +49,6 @@ export class UserModelMysql {
         "SELECT EXISTS(SELECT 1 FROM user WHERE email = ?)",
         [email]
       );
-      console.log({ isUserExist: isUserExist[0] });
       return isUserExist[0];
     } catch (error) {
       throw new Error("Error verifying user");

@@ -15,7 +15,6 @@ export class AuthController {
         email,
         password,
       });
-    console.log({ status, message, token, name, surname, lastname });
     return res
       .status(status as number)
       .json({ message, token, name, surname, lastname });

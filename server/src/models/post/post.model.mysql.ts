@@ -75,4 +75,28 @@ export class PostModelMysql {
       throw new Error(`Error: ${error.sqlMessage}`);
     }
   }
+
+  static async getPostBySlug(slug: string): Promise<PostInterface> {
+    try {
+      const post = (await pool.query("SELECT * from post WHERE slug = ?", [
+        slug,
+      ])) as PostInterface[];
+      return post[0];
+    } catch (error: any) {
+      console.log({ error });
+      throw new Error(`Error: ${error.sqlMessage}`);
+    }
+  }
+  static async getRelatedPost(slug: string): Promise<PostInterface[]> {
+    try {
+      const post = (await pool.query(
+        "SELECT * from post WHERE NOT slug = ? LIMIT 3",
+        [slug]
+      )) as PostInterface[];
+      return post;
+    } catch (error: any) {
+      console.log({ error });
+      throw new Error(`Error: ${error.sqlMessage}`);
+    }
+  }
 }

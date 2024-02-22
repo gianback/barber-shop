@@ -31,7 +31,6 @@ export const validatePost = (
       const errorFormated = error.issues.map(({ message }) => {
         message;
       });
-      console.log({ errorFormated });
       return res.status(400).json({
         message: errorFormated,
       });

@@ -18,7 +18,6 @@ PaymentRoute.post("/", async (req, res) => {
     unit_amount: 25 * 100,
     currency: "usd",
   });
-  console.log({ product });
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {

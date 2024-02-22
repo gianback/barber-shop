@@ -22,7 +22,6 @@ export class ServiceController {
       img: newImg.url as string,
       slug,
     });
-    console.log({ message, status });
     return res.status(status).json({ message });
   };
 

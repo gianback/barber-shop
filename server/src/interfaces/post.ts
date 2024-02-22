@@ -14,6 +14,8 @@ export interface PostRepository {
   getPosts(): Promise<PostInterface[]>;
   deletePost(post_id: string): Promise<GeneralResponse>;
   updatePost({ id, ...newUser }: PostUpdate): Promise<GeneralResponse>;
+  getPostBySlug(slug: string): Promise<PostInterface>;
+  getRelatedPost(slug: string): Promise<PostInterface[]>;
 }
 
 export type PostUpdate = {
