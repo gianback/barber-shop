@@ -1,10 +1,13 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import Stripe from "stripe";
 import { STRIPE_SECRET_KEY, URL_FRONT } from "../../config/dotenv";
 const stripe = new Stripe(STRIPE_SECRET_KEY);
 export const PaymentRoute = Router();
 
-PaymentRoute.post("/", async (req, res) => {
+PaymentRoute.post("/", async (req: Request, res: Response) => {
+  const { body } = req;
+  console.log({ body });
+
   /* 
   
   TODO: MANDAR LOS IDS Y BUSCAR EN LA BD
@@ -29,5 +32,6 @@ PaymentRoute.post("/", async (req, res) => {
     success_url: req.headers.origin + "?success=true",
     cancel_url: req.headers.origin + "?canceled=true",
   });
+  console.log(session);
   return res.json({ session });
 });

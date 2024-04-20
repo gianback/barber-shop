@@ -1,9 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Logo } from "./Logo";
 import { Button } from "./ui/button";
 import { Container } from "./Container";
 import { IconMenu } from "./Icon-menu";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -19,6 +19,8 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   const [isToken, setIsToken] = useState(false);
 
   const user = useUserStore((state) => state.user);
@@ -27,7 +29,7 @@ export function Header() {
     setIsOpen(!isOpen);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const token = JsCookie.get("token");
     setIsToken(!!token);
   }, []);
@@ -41,6 +43,12 @@ export function Header() {
     navigate(route);
   };
 
+  const disableBtn = () => {
+    return pathname.includes("/contact");
+  };
+
+  const isVisibleBtn = disableBtn();
+
   return (
     <header className="bg-tertiary py-3 sticky top-0 z-50">
       <Container className="flex justify-between items-center">
@@ -52,15 +60,20 @@ export function Header() {
           {user.name && isToken && (
             <span className="text-white">¡Hola {user.name}!</span>
           )}
-          {isToken ? (
+          {isToken && !isVisibleBtn && (
             <Link to={"/contact"}>
-              <Button className="bg-primary/80 text-white  hover:bg-primary/80 hidden lg:inline-block">
+              <Button
+                className={` bg-primary/80 text-white  hover:bg-primary/80 hidden lg:inline-block`}
+              >
                 Agendar cita
               </Button>
             </Link>
-          ) : (
+          )}
+          {!isToken && !isVisibleBtn && (
             <Dialog open={isModalOpen} onOpenChange={handleOpenDialog}>
-              <DialogTrigger className="bg-primary text-white py-2 rounded-md px-3 hover:bg-primary/80 hidden lg:inline-block">
+              <DialogTrigger
+                className={` bg-primary text-white py-2 rounded-md px-3 hover:bg-primary/80 hidden lg:inline-block`}
+              >
                 Agendar cita
               </DialogTrigger>
               <DialogContent className="bg-secondary text-white">

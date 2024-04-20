@@ -17,6 +17,7 @@ import Cookie from "js-cookie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "@/store/user.store";
+import { Spinner } from "..";
 
 export function LoginForm() {
   const navigate = useNavigate();
@@ -41,8 +42,8 @@ export function LoginForm() {
           "Content-Type": "application/json",
         },
       });
-      const { token, name, surname, lastname } = data;
-      setUser({ name, surname, lastname });
+      const { token, name, surname, lastname, email } = data;
+      setUser({ name, surname, lastname, email });
       Cookie.set("token", token);
       navigate("/");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -97,7 +98,7 @@ export function LoginForm() {
             disabled={isLoading}
             className="bg-primary mt-4 hover:bg-primary/80"
           >
-            {isLoading ? "Cargando..." : "Iniciar Sesión"}
+            {isLoading ? <Spinner /> : "Iniciar Sesión"}
           </Button>
           {responseMessage && (
             <p className="text-red-500">Credenciales Invalidas</p>

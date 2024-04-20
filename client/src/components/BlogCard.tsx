@@ -16,18 +16,11 @@ export function BlogCard({
   description: string;
   createdAt: string;
 }) {
-  const handleGotoTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
   return (
-    <Link to={`/blog/${slug}`} key={`${id}-${title}`} onClick={handleGotoTop}>
+    <Link to={`/blog/${slug}`} key={`${id}-${title}`}>
       <picture>
         <img
-          className="aspect-square w-full object-cover"
+          className="aspect-square w-full object-cover "
           src={img}
           alt={title}
         />

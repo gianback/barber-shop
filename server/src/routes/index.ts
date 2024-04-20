@@ -9,6 +9,7 @@ import { AuthRoute } from "./auth";
 import { AuthService } from "../services/auth.service";
 import { UserModelMysql } from "../models/user/user.model.mysql";
 import { PaymentRoute } from "./payments";
+import { WebhooksRoute } from "./webhook";
 const router = Router();
 
 router.use("/appointments", AppointmentRoute(AppointmentModelMysql));
@@ -19,5 +20,6 @@ router.use("/payments", PaymentRoute);
 const authService = new AuthService(UserModelMysql);
 
 router.use("/auth", AuthRoute(authService));
+router.use("/webhook", WebhooksRoute);
 
 export default router;

@@ -6,13 +6,22 @@ export function About() {
       <Container className="grid lg:grid-cols-2 place-items-center">
         <ul className="grid lg:grid-cols-2 [&>li>img]:object-cover">
           <li className="flex justify-end lg:translate-y-4 relative z-[2] w-full">
-            <img src="../../src/assets/about-1.jpg" alt="" />
+            <img
+              src="../../src/assets/about-1.jpg"
+              alt="Imagen hombre haciendo un corte de cabello"
+            />
           </li>
           <li className="hidden lg:flex items-end row-span-2  -translate-x-8">
-            <img src="../../src/assets/about-3.jpg" alt="" />
+            <img
+              src="../../src/assets/about-3.jpg"
+              alt="Imagen hombre haciendo un corte de cabello"
+            />
           </li>
           <li className="hidden lg:block -translate-x-16 -translate-y-6">
-            <img src="../../src/assets/about-2.jpg" alt="" />
+            <img
+              src="../../src/assets/about-2.jpg"
+              alt="Imagen hombre haciendo un corte de cabello"
+            />
           </li>
         </ul>
         <div className="mt-8 lg:mt-0 [&>p]:text-sm lg:[&>p]:text-base">

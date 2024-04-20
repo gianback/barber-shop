@@ -9,7 +9,7 @@ export function useAuth() {
   const navigate = useNavigate();
   const setUser = useUserStore((state) => state.setUser);
   const { pathname } = useLocation();
-  const setIsAdmin = useAuthStore().setIsAdmin;
+  const setIsAdmin = useAuthStore((state) => state.setIsAdmin);
 
   const verifyRoll = useCallback(async () => {
     try {
@@ -30,7 +30,7 @@ export function useAuth() {
       setIsAdmin(data.status === 200);
     } catch (error) {
       Cookies.remove("token");
-      setUser({ name: "", surname: "", lastname: "" });
+      setUser({ name: "", surname: "", lastname: "", email: "" });
       if (pathname !== "/") {
         navigate("/login");
       }

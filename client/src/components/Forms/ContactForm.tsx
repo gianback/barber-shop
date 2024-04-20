@@ -11,10 +11,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Toaster } from "@/components/ui/toaster";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { api } from "@/lib/api";
-import Cookie from "js-cookie";
-import { FormEvent, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useUserStore } from "@/store/user.store";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { ContactInterface, zodContactSchema } from "@/types/contact";
@@ -34,7 +32,8 @@ import {
 } from "@/components/ui/select";
 import { Spinner } from "../Spinner";
 import { loadStripe } from "@stripe/stripe-js";
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+import { checkoutService } from "@/services/checkout.service";
+
 const hours = [
   "10:00",
   "11:00",
@@ -64,62 +63,46 @@ const temporalServices = [
     value: "corte-de-cabello-y-barba",
   },
 ];
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+
 export function ContactForm() {
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const setUser = useUserStore((state) => state.setUser);
+  const user = useUserStore((state) => state.user);
   const [responseMessage, setResponseMessage] = useState("");
   const [searchParams] = useSearchParams();
+
   const form = useForm<ContactInterface>({
     resolver: zodResolver(zodContactSchema),
     defaultValues: {
-      name: "",
-      surname: "",
-      lastname: "",
+      name: user.name || "",
+      surname: user.surname || "",
+      lastname: user.lastname || "",
+      email: user.email || "",
       service: searchParams.get("service") || "",
       date: undefined,
       hour: "",
     },
   });
   const { handleSubmit } = form;
-  // const handletest = async (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const stripe = await stripePromise;
-  //   const response = await fetch("http://localhost:3000/v1/api/payments", {
-  //     method: "POST",
-  //   });
-  //   const { session } = await response.json();
-  //   // window.location.href = session.url;
-  //   if (stripe === null) return;
-  //   // When the customer clicks on the button, redirect them to Checkout.
-  //   console.log(session);
-  //   const result = await stripe.redirectToCheckout({
-  //     sessionId: session.id,
-  //   });
-  //   if (result.error) {
-  //     console.error(result.error);
-  //   }
-  // };
   const onSubmit = async (values: ContactInterface) => {
-    console.log({ values });
-    return;
     try {
       setIsLoading(true);
-      const { data } = await api.post("auth/login", values, {
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const stripe = await stripePromise;
+
+      const { session } = await checkoutService(values);
+
+      const result = await stripe?.redirectToCheckout({
+        sessionId: session.id,
       });
-      const { token, name, surname, lastname } = data;
-      setUser({ name, surname, lastname });
-      Cookie.set("token", token);
-      navigate("/");
+      console.log({ result });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      setResponseMessage(error.data.message);
+      setResponseMessage(error.response.data.message);
       setTimeout(() => {
         setResponseMessage("");
       }, 2500);
+      throw new Error("Error Submit data for go to checkout");
     } finally {
       setIsLoading(false);
     }
@@ -165,6 +148,23 @@ export function ContactForm() {
                 <FormLabel className="text-white">Apellido Paterno</FormLabel>
                 <FormControl>
                   <Input type="text" placeholder="Garcia" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-white">Correo electrónico</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="example@example.com"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -277,9 +277,6 @@ export function ContactForm() {
           )}
         </form>
       </Form>
-      {/* <form onSubmit={handletest}>
-        <button>submit</button>
-      </form> */}
       <Toaster />
     </>
   );

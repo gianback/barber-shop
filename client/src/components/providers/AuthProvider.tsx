@@ -12,11 +12,3 @@ export function AuthIsntLoggedProvider({ children }: Props) {
 
   return children;
 }
-export function AuthIsLoggedProvider({ children }: Props) {
-  const token = Cookie.get("token");
-  if (!token) {
-    return <Navigate to={"/login"} />;
-  }
-
-  return children;
-}

@@ -15,10 +15,12 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Toaster, toast } from "sonner";
+import { Spinner } from "..";
 
 export function RegisterForm() {
   const navigate = useNavigate();
   const [responseMessage, setResponseMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
@@ -34,6 +36,7 @@ export function RegisterForm() {
 
   const onSubmit = async (values: RegisterSchema) => {
     try {
+      setIsLoading(true);
       await api.post("auth/register", values);
 
       toast.success("Cuenta creada!", {
@@ -49,6 +52,8 @@ export function RegisterForm() {
       setTimeout(() => {
         setResponseMessage("");
       }, 2500);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -137,7 +142,7 @@ export function RegisterForm() {
             )}
           />
           <Button className="bg-primary mt-4 hover:bg-primary/80">
-            Enviar
+            {isLoading ? <Spinner /> : "Enviar"}
           </Button>
           {responseMessage && (
             <p className="text-red-500">Credenciales Invalidas</p>

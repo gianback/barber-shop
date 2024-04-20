@@ -19,6 +19,15 @@ export const zodContactSchema = z.object({
     .max(255, {
       message: "Apellido Paterno debe ser máximo 255 caracteres.",
     }),
+  email: z
+    .string()
+    .email()
+    .min(1, {
+      message: "Correo electrónico es requerido.",
+    })
+    .max(255, {
+      message: "Correo electrónico debe ser máximo 255 caracteres.",
+    }),
   lastname: z
     .string()
     .min(1, {

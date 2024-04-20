@@ -1,6 +1,6 @@
 import { BlogCard } from "@/components/BlogCard";
 import { Container } from "@/components/Container";
-import { getPostBySlug, getRelatedPosts } from "@/services/blog.service";
+import { fetchPostBySlug, fetchRelatedPosts } from "@/services/blog.service";
 import { IBlog } from "@/types/blog";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -12,7 +12,7 @@ export function BlogDetails() {
 
   const getPost = useCallback(async () => {
     try {
-      const response = await getPostBySlug(slug as string);
+      const response = await fetchPostBySlug(slug as string);
       if (response.status === 200) setBlog(response.data);
     } catch (error) {
       console.log(error);
@@ -22,7 +22,7 @@ export function BlogDetails() {
 
   const getRelatedPost = useCallback(async () => {
     try {
-      const response = await getRelatedPosts(slug as string);
+      const response = await fetchRelatedPosts(slug as string);
       if (response.status === 200) setBlogRelated(response.data);
     } catch (error) {
       console.log(error);
