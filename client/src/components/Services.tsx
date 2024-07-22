@@ -1,6 +1,5 @@
 import { CSSProperties, useEffect, useState } from "react";
 import { IService } from "@/types/service";
-import { controller } from "@/lib/abort-controller";
 import { fetchGetServices } from "@/services/services.service";
 import { Container, ServiceCard } from ".";
 
@@ -14,9 +13,6 @@ export function Services() {
 
   useEffect(() => {
     getServices();
-    return () => {
-      controller.abort();
-    };
   }, []);
 
   return (
