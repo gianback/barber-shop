@@ -1,4 +1,4 @@
-import { verify } from "jsonwebtoken";
+import * as jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 import { JWT_SECRET } from "../config/dotenv";
 
@@ -15,7 +15,7 @@ export const validateToken = (
   }
 
   try {
-    verify(token, JWT_SECRET);
+    jwt.verify(token, JWT_SECRET);
     next();
   } catch (error) {
     return res.status(401).json({ message: "Invalid token" });

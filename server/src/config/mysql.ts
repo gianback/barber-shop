@@ -1,4 +1,4 @@
-import mysql from "serverless-mysql";
+import mysql from "mysql2/promise.js";
 import {
   SQL_DATABASE,
   SQL_HOST,
@@ -7,12 +7,10 @@ import {
   SQL_USER,
 } from "./dotenv";
 
-export const pool = mysql({
-  config: {
-    host: SQL_HOST,
-    user: SQL_USER,
-    password: SQL_PASSWORD,
-    database: SQL_DATABASE,
-    port: +SQL_PORT,
-  },
+export const pool = await mysql.createConnection({
+  host:SQL_HOST,
+  user:SQL_USER,
+  database:SQL_DATABASE,
+  password: SQL_PASSWORD,
+  port: +SQL_PORT
 });

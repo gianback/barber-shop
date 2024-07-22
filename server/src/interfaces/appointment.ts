@@ -5,7 +5,7 @@ export interface AppointmentInterface {
   date: Date;
   service_id: string;
   user_id: string;
-  paymentId: string;
+  payment_id: string;
 }
 
 export interface EditAppointmentProps {

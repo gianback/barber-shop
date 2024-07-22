@@ -4,7 +4,7 @@ import { UserInterface } from "../interfaces/user";
 import { AuthResponse, GeneralResponse } from "../interfaces/response";
 import { UserRepository } from "../models/user/user.model.mysql";
 import { JWT_SECRET } from "../config/dotenv";
-import { sign, verify } from "jsonwebtoken";
+import * as jwt from "jsonwebtoken";
 import { LoginResponse, loginProps } from "../interfaces/auth";
 
 export class AuthService {
@@ -91,7 +91,7 @@ export class AuthService {
     }
   };
   generateToken = ({ id, roll }: { id: string; roll: string }): string => {
-    const token = sign({ id, roll }, JWT_SECRET, { expiresIn: "1200" });
+    const token = jwt.sign({ id, roll }, JWT_SECRET, { expiresIn: "1200" });
 
     return token;
   };

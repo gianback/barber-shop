@@ -31,11 +31,12 @@ export class ServiceModelMysql {
 
   static async getServices(): Promise<ServiceInterface[]> {
     try {
-      const findServices = await pool.query<ServiceInterface[]>(
+      const servicesQuery = await pool.query(
         "SELECT * FROM service"
       );
 
-      return findServices;
+      const foundServices = servicesQuery[0] as ServiceInterface[]
+      return foundServices
     } catch (error: any) {
       throw new Error(`Error: ${error.sqlMessage}`);
     }

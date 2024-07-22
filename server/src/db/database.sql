@@ -1,0 +1,38 @@
+CREATE TABLE user (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name  VARCHAR(150) NOT NULL,
+  surname  VARCHAR(150) NOT NULL,
+  lastname  VARCHAR(150) NOT NULL,
+  email  VARCHAR(150) UNIQUE NOT NULL,
+  password VARCHAR(150) NOT NULL,
+  roll enum('user','admin')
+);
+
+
+CREATE TABLE appointment (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  date TIMESTAMP UNIQUE NOT NULL,
+  service_id INT NOT NULL,
+  user_id INT NOT NULL,
+  payment_id VARCHAR(150),
+  FOREIGN KEY (service_id) REFERENCES service(id),
+  FOREIGN KEY (user_id) REFERENCES user(id)
+);
+
+CREATE TABLE post(
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(150) UNIQUE NOT NULL,
+  content TEXT NOT NULL,
+  description VARCHAR(150) NOT NULL,
+  img VARCHAR(150) NOT NULL,
+  slug VARCHAR(150) UNIQUE NOT NULL
+);
+
+CREATE TABLE service(
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(150) UNIQUE NOT NULL,
+  description VARCHAR(150) UNIQUE NOT NULL,
+  img VARCHAR(150) UNIQUE NOT NULL,
+  price FLOAT(8,2),
+  slug VARCHAR(150) UNIQUE NOT NULL
+);
